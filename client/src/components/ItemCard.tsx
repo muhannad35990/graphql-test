@@ -13,18 +13,10 @@ const ADD_TO_CART_MUTATION = gql`
   }
 `;
 
-interface Options {
-  AddChicken: Boolean;
-  AddTofu: Boolean;
-  AddShrimp: Boolean;
-  AddHoneyRoastedPork: Boolean;
-  ExtraChicken: Boolean;
-  ExtraTofu: Boolean;
-  ExtraShrimp: Boolean;
-  ExtraPork: Boolean;
-  NoProtein: Boolean;
-  NoUtensils: Boolean;
-  SpecialInstructions: String;
+interface Option {
+  name: string;
+  selected: boolean;
+  price: number;
 }
 
 export interface Item {
@@ -33,8 +25,9 @@ export interface Item {
   name: String;
   price: number;
   decription: String;
-  options: Options;
+  options: [Option];
 }
+
 const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [total, setTotal] = useState(0);
@@ -42,7 +35,8 @@ const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
 
   return (
     <>
-      <div className={`bg-[url('${img && img}')] w-20 rounded`}>
+      ``
+      <div className={`bg-[url('${img}')] w-20 rounded`}>
         <PlusCircleOutlined onClick={() => setShowDetails(true)} />
         <h3>{name}</h3>
         <h5>{price}$</h5>
@@ -65,13 +59,13 @@ const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
               <h4>Select at least 1</h4>
             </div>
             <div className="flex flex-col">
-              {Object.keys(options).map(function (key, index) {
+              {options.map((option) => {
                 return (
                   <div className="flex align-middle justify-between">
-                    <h5>{key}</h5>
+                    <h5>{option.name}</h5>
                     <div>
-                      <h5>{options[key].price}</h5>
-                      <input type="checkbox" />
+                      <h5>{option.price}</h5>
+                      {option.selected && <input type="checkbox" />}
                     </div>
                   </div>
                 );
@@ -80,9 +74,7 @@ const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
           </Col>
           <Col span={24}>
             <InputNumber min={1} max={10} />
-            <button onClick={() => addtoCart(item)}>
-              Add To Cart(${total})
-            </button>
+            <button>Add To Cart(${total})</button>
           </Col>
         </Row>
       </Modal>

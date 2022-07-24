@@ -1,33 +1,32 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
-  type Options {
-    AddChicken: {selected:Boolean,price:Int}
-    AddTofu: {selected:Boolean,price:Int}
-    AddShrimp: {selected:Boolean,price:Int}
-    AddHoneyRoastedPork: {selected:Boolean,price:Int}
-    ExtraChicken: {selected:Boolean,price:Int}
-    ExtraTofu: {selected:Boolean,price:Int}
-    ExtraShrimp: {selected:Boolean,price:Int}
-    ExtraPork: {selected:Boolean,price:Int}
-    NoProtein: {selected:Boolean,price:Int}
-    NoUtensils: {selected:Boolean,price:Int}
-    SpecialInstructions: String
+  type Option {
+    id: ID!
+    name: String
+    selected: Boolean
+    price: Float
   }
 
   type Item {
     id: ID!
     img: String!
     name: String!
-    price: Int!
+    price: Float!
     decription: String
-    options: Options
+    options: [Option]
+  }
+
+  type CartItem {
+    id: ID!
+    count: Int!
+    item: Item
   }
 
   type MenuCart {
-    id: ID!
-    name: String
-    items: [Item!]!
+    menuId: ID!
+    name: String!
+    items: [CartItem!]!
   }
 
   type Category {
@@ -43,16 +42,36 @@ const typeDefs = gql`
   }
 
   type Query {
-    menus(id: ID!): [Menu!]!
+    menus: [Menu!]
+    menu(id: ID!): Menu!
+    carts: [MenuCart!]
     cart(id: ID!): MenuCart!
   }
 
-  input AddToCart {
-    item: Item!
+  input optionInput {
+    id: Int
+  }
+  input ItemInput {
+    id: Int!
+    img: String!
+    name: String!
+    price: Float!
+    decription: String
+    options: [optionInput]
+  }
+
+  input CartItemInput {
+    count: Int!
+    item: ItemInput
+  }
+
+  input addToCartInput {
+    menuId: Int!
+    items: [CartItemInput]
   }
 
   type Mutation {
-    addToCart(input: AddToCart!): Item
+    addToCart(input: addToCartInput): MenuCart!
   }
 `;
 

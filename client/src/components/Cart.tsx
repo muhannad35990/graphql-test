@@ -21,7 +21,7 @@ function Cart() {
     <div className="flex flex-col">
       {cart.map((item: any) => (
         <div className="flex align-middle">
-          <img src={item.img} alt="" />
+          <img src={item?.img} alt="" />
           <div className="flex flex-col">
             <h2>{item.name}</h2>
             <p>{item.description}</p>

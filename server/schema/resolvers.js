@@ -1,4 +1,4 @@
-const { MenuList, cart } = require("../FakeData");
+const { MenuList, cartList } = require("../FakeData");
 const _ = require("lodash");
 const resolvers = {
   Query: {
@@ -10,18 +10,21 @@ const resolvers = {
       const menu = _.find(MenuList, { id: Number(id) });
       return menu;
     },
+    carts() {
+      return cartList;
+    },
     cart: (parent, args) => {
       const id = args.id;
-      const selectedCart = _.find(cart, { id: Number(id) });
-      return selectedCart;
+      const cart = _.find(cartList, { menuId: Number(id) });
+      return cart;
     },
   },
   Mutation: {
-    addtoCart: (parent, args) => {
+    addToCart: (parent, args) => {
       const item = args.input;
-      const lastId = MenuList[MenuList.length - 1].id;
+      const lastId = cartList[cartList.length - 1].id;
       item.id = lastId + 1;
-      MenuList.push(item);
+      cartList.push(item);
       return item;
     },
   },
