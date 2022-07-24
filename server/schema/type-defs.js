@@ -2,16 +2,16 @@ const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   type Options {
-    AddChicken: Boolean
-    AddTofu: Boolean
-    AddShrimp: Boolean
-    AddHoneyRoastedPork: Boolean
-    ExtraChicken: Boolean
-    ExtraTofu: Boolean
-    ExtraShrimp: Boolean
-    ExtraPork: Boolean
-    NoProtein: Boolean
-    NoUtensils: Boolean
+    AddChicken: {selected:Boolean,price:Int}
+    AddTofu: {selected:Boolean,price:Int}
+    AddShrimp: {selected:Boolean,price:Int}
+    AddHoneyRoastedPork: {selected:Boolean,price:Int}
+    ExtraChicken: {selected:Boolean,price:Int}
+    ExtraTofu: {selected:Boolean,price:Int}
+    ExtraShrimp: {selected:Boolean,price:Int}
+    ExtraPork: {selected:Boolean,price:Int}
+    NoProtein: {selected:Boolean,price:Int}
+    NoUtensils: {selected:Boolean,price:Int}
     SpecialInstructions: String
   }
 
@@ -19,22 +19,25 @@ const typeDefs = gql`
     id: ID!
     img: String!
     name: String!
-    price: Float!
+    price: Int!
     decription: String
     options: Options
   }
 
   type MenuCart {
+    id: ID!
     name: String
     items: [Item!]!
   }
 
   type Category {
+    id: ID!
     name: String!
     items: [Item!]!
   }
 
   type Menu {
+    id: ID!
     name: String!
     categories: [Category!]!
   }

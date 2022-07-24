@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
-import { Row, Tabs } from "antd";
+import { Col, Row, Tabs } from "antd";
+import ItemCard, { Item } from "./ItemCard";
 const { TabPane } = Tabs;
 
 const QUERY_ALL_MENUS = gql`
@@ -31,15 +32,27 @@ function TabsPage() {
   return (
     <div>
       <Tabs defaultActiveKey="1" type="card" size="small">
-        <TabPane tab="RECOMENDED" key="1">
-          <Row justify="center" gutter={[24, 0]}></Row>
-        </TabPane>
-        <TabPane tab="SMALL BITES" key="1">
-          <Row justify="center" gutter={[24, 0]}></Row>
-        </TabPane>
-        <TabPane tab="MAINS" key="1">
-          <Row justify="center" gutter={[24, 0]}></Row>
-        </TabPane>
+        {allMenus.map((menu: any) => (
+          <TabPane tab={menu.name} key={menu.id}>
+            {menu.categories.map((cat: any) => (
+              <Row justify="center" gutter={[24, 0]}>
+                <Col span={24}>{cat.name}</Col>
+                {cat.items.map((item: Item) => (
+                  <Col span={8}>
+                    <ItemCard
+                      id={item.id}
+                      img={item.img}
+                      name={item.name}
+                      price={item.price}
+                      decription={item.decription}
+                      options={item.options}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            ))}
+          </TabPane>
+        ))}
       </Tabs>
     </div>
   );
