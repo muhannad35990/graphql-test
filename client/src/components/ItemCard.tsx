@@ -1,19 +1,12 @@
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
 import { Col, InputNumber, Modal, Row } from "antd";
 import { gql } from "apollo-server-core";
 import React, { FC, useState } from "react";
-
-const ADD_TO_CART_MUTATION = gql`
-  mutation AddToCart($input: Item!) {
-    addToCart(input: $input) {
-      id
-      name
-    }
-  }
-`;
+import AddToCartModal from "./AddToCartModal";
 
 interface Option {
+  id: number;
   name: string;
   selected: boolean;
   price: number;
@@ -21,63 +14,52 @@ interface Option {
 
 export interface Item {
   id: number;
-  img: String;
-  name: String;
+  img: string;
+  name: string;
   price: number;
-  decription: String;
+  decription: string;
   options: [Option];
 }
 
+// const ADD_TO_CART_MUTATION = gql`
+//   mutation AddToCart($input: Item!) {
+//     addToCart(input: $input) {
+//       id
+//       name
+//     }
+//   }
+// `;
+
 const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const [total, setTotal] = useState(0);
-  const [addtoCart, {}] = useMutation(ADD_TO_CART_MUTATION);
+
+  //const [addtoCart, {}] = useMutation(ADD_TO_CART_MUTATION);
 
   return (
     <>
-      ``
-      <div className={`bg-[url('${img}')] w-20 rounded`}>
-        <PlusCircleOutlined onClick={() => setShowDetails(true)} />
-        <h3>{name}</h3>
-        <h5>{price}$</h5>
-      </div>
-      <Modal
-        visible={showDetails}
-        title="name"
-        centered
-        footer={null}
-        onCancel={() => setShowDetails(false)}
-        destroyOnClose={true}
-        maskClosable={false}
+      <div
+        style={{ backgroundImage: `url('${img}')` }}
+        className="object-contain h-64 rounded md:w-44 sm:w-1 relative   bg-cover bg-no-repeat bg-center m-1 shadow"
       >
-        <Row justify="center" gutter={[24, 0]}>
-          <Col span={24}>
-            <h1>{name}</h1>
-            <p>{decription}</p>
-            <div className="flex justify-between">
-              <h3>Protein options</h3>
-              <h4>Select at least 1</h4>
-            </div>
-            <div className="flex flex-col">
-              {options.map((option) => {
-                return (
-                  <div className="flex align-middle justify-between">
-                    <h5>{option.name}</h5>
-                    <div>
-                      <h5>{option.price}</h5>
-                      {option.selected && <input type="checkbox" />}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Col>
-          <Col span={24}>
-            <InputNumber min={1} max={10} />
-            <button>Add To Cart(${total})</button>
-          </Col>
-        </Row>
-      </Modal>
+        <button
+          onClick={() => setShowDetails(true)}
+          className="absolute top-2 right-3 text-md text-black bg-white grid items-center p-1 rounded-full"
+        >
+          <PlusOutlined />
+        </button>
+
+        <div className="absolute bottom-0 left-0 p-2   w-44">
+          <h5 className="text-white">{price}$</h5>
+          <h3 className="text-white">{name}</h3>
+        </div>
+      </div>
+      <AddToCartModal
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+        name={name}
+        decription={decription}
+        options={options}
+      />
     </>
   );
 };
