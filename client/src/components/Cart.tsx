@@ -29,7 +29,6 @@ function Cart() {
           <h3>{item.price}</h3>
         </div>
       ))}
-      <button className="w-100 mt-6">Proceed to Checkout</button>
     </div>
   );
 }

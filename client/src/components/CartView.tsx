@@ -48,7 +48,7 @@ const CartView: FC<ModelProps> = ({ showCart, setShowCart, menuId }) => {
         <Col span={24}>
           <h1 className="font-bold">Cart</h1>
         </Col>
-        <Col xs={24} sm={12} md={6}>
+        <Col xs={24}>
           {cartData?.cart ? (
             cartData.cart.items.map((cartItem: any) => (
               <div className="flex justify-between">
@@ -82,6 +82,11 @@ const CartView: FC<ModelProps> = ({ showCart, setShowCart, menuId }) => {
           ) : (
             <h5>NO DATA</h5>
           )}
+        </Col>
+        <Col xs={24}>
+          <button className=" w-full mt-6 bg-blue-500 text-center text-white p-2 rounded mx-auto">
+            Proceed to Checkout
+          </button>
         </Col>
       </Row>
     </Modal>
