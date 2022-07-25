@@ -1,7 +1,4 @@
-import { PlusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { useMutation } from "@apollo/client";
-import { Col, InputNumber, Modal, Row } from "antd";
-import { gql } from "apollo-server-core";
+import { PlusOutlined } from "@ant-design/icons";
 import React, { FC, useState } from "react";
 import AddToCartModal from "./AddToCartModal";
 
@@ -19,21 +16,19 @@ export interface Item {
   price: number;
   decription: string;
   options: [Option];
+  menuId: number;
 }
 
-// const ADD_TO_CART_MUTATION = gql`
-//   mutation AddToCart($input: Item!) {
-//     addToCart(input: $input) {
-//       id
-//       name
-//     }
-//   }
-// `;
-
-const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
+const ItemCard: FC<Item> = ({
+  id,
+  img,
+  name,
+  price,
+  decription,
+  options,
+  menuId,
+}) => {
   const [showDetails, setShowDetails] = useState(false);
-
-  //const [addtoCart, {}] = useMutation(ADD_TO_CART_MUTATION);
 
   return (
     <>
@@ -59,6 +54,10 @@ const ItemCard: FC<Item> = ({ id, img, name, price, decription, options }) => {
         name={name}
         decription={decription}
         options={options}
+        price={price}
+        menuId={menuId}
+        id={id}
+        img={img}
       />
     </>
   );
