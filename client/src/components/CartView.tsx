@@ -3,9 +3,9 @@ import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import React, { FC, useEffect, useState } from "react";
 
 interface ModelProps {
-  showCart: boolean;
-  setShowCart: any;
-  menuId: number;
+  showCart?: boolean;
+  setShowCart?: any;
+  menuId?: number;
 }
 
 const QUERY_CART = gql`
@@ -30,6 +30,7 @@ const CartView: FC<ModelProps> = ({ showCart, setShowCart, menuId }) => {
 
   const [fetchCart, { data: cartData, loading, error }] =
     useLazyQuery(QUERY_CART);
+
   useEffect(() => {
     fetchCart({ variables: { menuId: menuId } });
   }, []);

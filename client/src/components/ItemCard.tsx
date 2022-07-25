@@ -10,13 +10,13 @@ interface Option {
 }
 
 export interface Item {
-  id: number;
-  img: string;
-  name: string;
-  price: number;
-  decription: string;
-  options: [Option];
-  menuId: number;
+  id?: number;
+  img?: string;
+  name?: string;
+  price?: number;
+  decription?: string;
+  options?: [Option];
+  menuId?: number;
 }
 
 const ItemCard: FC<Item> = ({
