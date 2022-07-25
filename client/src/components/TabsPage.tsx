@@ -100,6 +100,7 @@ function TabsPage() {
           <button
             className="fixed bottom-3 right-4   z-40 bg-slate-500 p-4 rounded text-white "
             onClick={() => setShowCart(true)}
+            data-test="show-cart-button"
           >
             <ShoppingCartOutlined className="text-xl" />
             <div className="absolute -top-2 -right-2 bg-slate-500 border border-white  w-6 h-6 rounded-full">

@@ -39,6 +39,7 @@ const ItemCard: FC<Item> = ({
         <button
           onClick={() => setShowDetails(true)}
           className="absolute top-2 right-3 text-md text-black bg-white grid items-center p-1 rounded-full"
+          data-test="show-details-button"
         >
           <PlusOutlined />
         </button>

@@ -85,7 +85,10 @@ const CartView: FC<ModelProps> = ({ showCart, setShowCart, menuId }) => {
           )}
         </Col>
         <Col xs={24}>
-          <button className=" w-full mt-6 bg-blue-500 text-center text-white p-2 rounded mx-auto">
+          <button
+            className=" w-full mt-6 bg-blue-500 text-center text-white p-2 rounded mx-auto"
+            data-test="checkout-button"
+          >
             Proceed to Checkout
           </button>
         </Col>
